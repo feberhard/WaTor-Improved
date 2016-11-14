@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Wator improved</title>
+    <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+    <div id="parent">
+        <canvas id="my-canvas"></canvas>
+        <script src="util.js"></script>
+        <script src="main.js"></script>
+
+        <div id="side">
+            <h2>Statistics</h2>
+            <table>
+                <tr>
+                    <td>
+                        nFish
+                    </td>
+                    <td>
+                        <output id="nFish" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        nSharks
+                    </td>
+                    <td>
+                        <output id="nSharks" />
+                    </td>
+                </tr>
+            </table>
+
+            <h2>Configuration</h2>
+            <div>
+                <h3>General</h3>
+                <table>
+                    <tr>
+                        <td>
+                            fps
+                        </td>
+                        <td>
+                            <input id="fps" type="range" min="1" max="100" style="width: 170px;" step="10" onchange="changeFps();" />
+                            <output id="fpsNumber" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            maxDepth
+                        </td>
+                        <td>
+                            <input id="maxDepth" type="number" min="1" style="width: 30px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            globalReproduction
+                        </td>
+                        <td>
+                            <input id="globalReproduction" type="checkbox">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            scoreFish
+                        </td>
+                        <td>
+                            <input id="c1" type="number" min="0" style="width: 30px;" placeholder="c1" /> * nFish - <input
+                                id="c2" type="number" min="0" style="width: 30px;" placeholder="c2" /> * nSharks
+                        </td>
+                    </tr>
+                </table>
+
+
+                <h3>Fish</h3>
+                <table>
+                    <tr>
+                        <td>
+                            fishStartPopulation
+                        </td>
+                        <td>
+                            <input id="fishStartPopulation" type="number" min="0" style="width: 50px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            fishEnergy
+                        </td>
+                        <td>
+                            <input id="fishEnergy" type="number" min="0" style="width: 30px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            fishBreedingRate
+                        </td>
+                        <td>
+                            <input id="fishBreedingRate" type="number" min="0" style="width: 30px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            fishSize
+                        </td>
+                        <td>
+                            <input id="fishSize" type="number" min="0" style="width: 30px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            fishEatProbability
+                        </td>
+                        <td>
+                            <input id="fishEatProbability" type="number" step="0.1" min="0" max="1" style="width: 50px;" />
+                        </td>
+                    </tr>
+                </table>
+
+                <h3>Shark</h3>
+                <table>
+                    <tr>
+                        <td>
+                            sharkStartPopulation
+                        </td>
+                        <td>
+                            <input id="sharkStartPopulation" type="number" min="0" style="width: 50px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            sharkStartEnergy
+                        </td>
+                        <td>
+                            <input id="sharkStartEnergy" type="number" min="0" style="width: 30px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            sharkBreedingRate
+                        </td>
+                        <td>
+                            <input id="sharkBreedingRate" type="number" min="0" style="width: 30px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            sharkSize
+                        </td>
+                        <td>
+                            <input id="sharkSize" type="number" min="0" style="width: 30px;" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <hr >
+                <button onclick="startSimulation()">Start simulation</button>
+                <button onclick="restoreDefaultConfig()">Load default configuration</button>
+            </div>
+        </div>
+</body>
+
+</html>
