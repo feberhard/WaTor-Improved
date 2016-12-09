@@ -158,9 +158,14 @@ function initColors() {
 
 }
 
-function gameloop() {
+var pauseFlag = false;
+var startCount = 0; // increase after every press on start button to check if the current loop has to be canceled
+function gameloop(currentStartCount) {
     setTimeout(function () {
-        requestAnimationFrame(gameloop);
+        if (pauseFlag || currentStartCount != startCount) {
+            return;
+        }
+        requestAnimationFrame(gameloop.bind(this, currentStartCount));
 
         updateField();
 
@@ -513,17 +518,40 @@ function restoreDefaultConfig() {
 }
 
 function startSimulation() {
+    pauseFlag = false;
     readConfigurationValues();
     init();
     initRandomValues(field);
-    gameloop();
+    startCount++;
+    gameloop(startCount);
+
+    startButton.value = "Restart simulation";
+    pauseButton.style.display = "inline-block";
+    resumeButton.style.display = "none";
 }
+
+function pauseSimulation() {
+    pauseFlag = true;
+    pauseButton.style.display = "none";
+    resumeButton.style.display = "inline-block";
+}
+
+function resumeSimulation() {
+    pauseFlag = false;
+    pauseButton.style.display = "inline-block";
+    resumeButton.style.display = "none";
+
+    requestAnimationFrame(gameloop.bind(this, startCount));
+}
+
+var startButton: HTMLButtonElement;
+var pauseButton: HTMLButtonElement;
+var resumeButton: HTMLButtonElement;
 
 window.onload = function () {
     fillHtmlInputs();
-};
 
-// y u not work?
-// (function () {
-//     fillHtmlInputs();
-// })();
+    startButton = <HTMLButtonElement>document.getElementById("btn-start-simulation");
+    pauseButton = <HTMLButtonElement>document.getElementById("btn-pause-simulation");
+    resumeButton = <HTMLButtonElement>document.getElementById("btn-resume-simulation");
+};

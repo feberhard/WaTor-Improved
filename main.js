@@ -127,9 +127,14 @@ function initColors() {
         }
     }
 }
-function gameloop() {
+var pauseFlag = false;
+var startCount = 0; // increase after every press on start button to check if the current loop has to be canceled
+function gameloop(currentStartCount) {
     setTimeout(function () {
-        requestAnimationFrame(gameloop);
+        if (pauseFlag || currentStartCount != startCount) {
+            return;
+        }
+        requestAnimationFrame(gameloop.bind(this, currentStartCount));
         updateField();
         drawClearField();
         drawField();
@@ -435,16 +440,34 @@ function restoreDefaultConfig() {
     fillHtmlInputs();
 }
 function startSimulation() {
+    pauseFlag = false;
     readConfigurationValues();
     init();
     initRandomValues(field);
-    gameloop();
+    startCount++;
+    gameloop(startCount);
+    startButton.value = "Restart simulation";
+    pauseButton.style.display = "inline-block";
+    resumeButton.style.display = "none";
 }
+function pauseSimulation() {
+    pauseFlag = true;
+    pauseButton.style.display = "none";
+    resumeButton.style.display = "inline-block";
+}
+function resumeSimulation() {
+    pauseFlag = false;
+    pauseButton.style.display = "inline-block";
+    resumeButton.style.display = "none";
+    requestAnimationFrame(gameloop.bind(this, startCount));
+}
+var startButton;
+var pauseButton;
+var resumeButton;
 window.onload = function () {
     fillHtmlInputs();
+    startButton = document.getElementById("btn-start-simulation");
+    pauseButton = document.getElementById("btn-pause-simulation");
+    resumeButton = document.getElementById("btn-resume-simulation");
 };
-// y u not work?
-// (function () {
-//     fillHtmlInputs();
-// })(); 
 //# sourceMappingURL=main.js.map
