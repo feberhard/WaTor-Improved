@@ -178,15 +178,24 @@ function init() {
     initColors();
 }
 function initRandomValues(field) {
+    // check params
+    if ((config.fishStartPopulation * config.fishSize) + (config.sharkStartPopulation * config.sharkSize) >= fieldHeight * fieldWidth * config.maxDepth) {
+        alert("To many fish/sharks. Check 'fishStartPopulation', 'sharkStartPopulation', 'fishSize' and 'sharkSize'!");
+        return;
+    }
     for (var i = 0; i < config.fishStartPopulation; i++) {
         var x = Math.floor(Math.random() * fieldWidth);
         var y = Math.floor(Math.random() * fieldHeight);
-        field[x][y].addFish(new Fish(Math.round(Math.random() * config.fishBreedingRate)));
+        if (!field[x][y].addFish(new Fish(Math.round(Math.random() * config.fishBreedingRate)))) {
+            i--;
+        }
     }
     for (var i = 0; i < config.sharkStartPopulation; i++) {
         var x = Math.floor(Math.random() * fieldWidth);
         var y = Math.floor(Math.random() * fieldHeight);
-        field[x][y].addShark(new Shark(config.sharkStartEnergy, Math.round(Math.random() * config.sharkBreedingRate)));
+        if (!field[x][y].addShark(new Shark(config.sharkStartEnergy, Math.round(Math.random() * config.sharkBreedingRate)))) {
+            i--;
+        }
     }
 }
 function randomizeArray(field) {
