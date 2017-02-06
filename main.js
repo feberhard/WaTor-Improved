@@ -235,6 +235,7 @@ function getBestCell(field, x, y, scoreFunction) {
     // 1 | 3 4 5
     // 2 | 6 7 8
     var neighbourCells = [1, 3, 5, 7]; // top, left, right, bottom
+    neighbourCells = randomizeArray(neighbourCells);
     var bestNeighbour = field[x][y];
     var bestScore = scoreFunction(bestNeighbour);
     for (var i = 0; i < neighbourCells.length; i++) {
